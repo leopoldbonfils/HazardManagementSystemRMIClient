@@ -7,6 +7,7 @@ package service;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 import modal.Hazard;
 
 /**
@@ -19,5 +20,6 @@ public interface HazardService extends Remote{
     int updateHazard(Hazard hazardObj)throws RemoteException;
     Hazard search(int hazardId)throws RemoteException;
     int deleteHazard(Hazard hazardObj) throws RemoteException;
+    List<Hazard> findAllHazards() throws RemoteException;
     
 }

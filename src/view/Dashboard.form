@@ -712,7 +712,7 @@
                                   <Component id="jScrollPane5" min="-2" pref="950" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="1120" max="32767" attributes="0"/>
+                          <EmptySpace pref="126" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -730,7 +730,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="245" max="-2" attributes="0"/>
-                          <EmptySpace pref="84" max="32767" attributes="0"/>
+                          <EmptySpace pref="92" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,6 +75,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private javax.swing.JDesktopPane desktopPane;
     private JComboBox<String> cbSeverity;
+    
    
 
     /**
@@ -96,6 +98,15 @@ public class Dashboard extends javax.swing.JFrame {
         comboBoxTxt.addItem("Low");
         comboBoxTxt.addItem("Medium");
         comboBoxTxt.addItem("High");
+        
+        
+        HazardTable = new JTable();
+        HazardTable.setModel(new DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "ID", "Type", "Description", "Severity", "Date", "Location", "Reporter"
+            }
+        ));
 
        
       
@@ -2658,6 +2669,30 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void searchbtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_searchbtnActionPerformed
         // TODO add your handling code here:
+        try{
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            ReporterService service = (ReporterService) reg.lookup("reporter");
+            
+            List<Reporter>reporters = service.findAllReporters();
+            
+            DefaultTableModel tbModel = (DefaultTableModel) ReporterTable.getModel();
+            tbModel.setRowCount(0);
+            for(Reporter rep: reporters){
+                Object[] rowData={
+                rep.getReporterId(),
+                rep.getFullName(),
+                rep.getPhoneNumber(),
+                rep.getEmail(),
+                rep.getGender()
+                        
+                };
+                tbModel.addRow(rowData);
+            }
+             
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
        
         
     }//GEN-LAST:event_searchbtnActionPerformed
@@ -2748,6 +2783,33 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
+        try{
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            MeasureService service = (MeasureService) reg.lookup("measure");
+            
+            List<Measure>measures=service.findAllMeasures();
+            
+            DefaultTableModel tbModel=(DefaultTableModel) measureTable.getModel();
+            tbModel.setRowCount(0);
+            for(Measure mea: measures){
+                Object[] rowData={
+                    mea.getMeasureId(),
+                    mea.getHazard(),
+                    mea.getMeasureType(),
+                    mea.getDescription(),
+                    mea.getResponsibleAuthority(),
+                    mea.getImplementationDate(),
+                    mea.getStatus(),
+                    mea.getEffectivenessRating()
+                };
+                tbModel.addRow(rowData);
+            }
+            
+            
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void deletebtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
@@ -3063,10 +3125,34 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
-       
-       
         
+       try {
+        
+        Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
+        LocationService service = (LocationService) reg.lookup("location");
 
+       
+        List<Location> locations = service.findAllLocations();
+
+       
+        DefaultTableModel tbModel = (DefaultTableModel) locationTb.getModel();
+        tbModel.setRowCount(0); 
+
+        for (Location loc : locations) {
+            Object[] rowData = {
+                loc.getLocationId(),
+                loc.getProvince(),
+                loc.getDistrict(),
+                loc.getSector(),
+                loc.getCell(),
+                loc.getVillage()
+            };
+            tbModel.addRow(rowData);
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+        ex.printStackTrace();
+    }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void hazardTypeTxtActionPerformed(ActionEvent evt) {//GEN-FIRST:event_hazardTypeTxtActionPerformed
@@ -3685,7 +3771,34 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void DisplayHazardTableActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DisplayHazardTableActionPerformed
         // TODO add your handling code here:
-        
+       try {
+    Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+    HazardService service = (HazardService) registry.lookup("hazard");
+    List<Hazard> hazards = service.findAllHazards();
+
+    DefaultTableModel tbModel = (DefaultTableModel) HazardTable.getModel();
+    tbModel.setRowCount(0); // Clear table
+
+    for (Hazard haz : hazards) {
+        // Defensive checks for null location/reporter
+        Integer locationId = (haz.getLocation() != null) ? haz.getLocation().getLocationId() : null;
+        Integer reporterId = (haz.getReporter() != null) ? haz.getReporter().getReporterId() : null;
+
+        Object[] rowData = {
+            haz.getHazardId(),
+            haz.getHazardType(),
+            haz.getDescription(),
+            haz.getSeverity(),
+            haz.getDate(),
+            locationId != null ? locationId : "null",
+            reporterId != null ? reporterId : "null"
+        };
+        tbModel.addRow(rowData);
+    }
+} catch (Exception ex) {
+    ex.printStackTrace();
+    JOptionPane.showMessageDialog(null, "Error displaying hazards: " + ex.getMessage());
+}
     }//GEN-LAST:event_DisplayHazardTableActionPerformed
 
     private void jButton8ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed

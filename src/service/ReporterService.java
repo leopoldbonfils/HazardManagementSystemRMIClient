@@ -7,6 +7,7 @@ package service;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 import modal.Reporter;
 
 
@@ -19,4 +20,5 @@ public interface ReporterService extends Remote{
     int updateReporter(Reporter reporterObj) throws RemoteException;
     Reporter search(int reporterId) throws RemoteException;
     int deleteReporter(Reporter reporterObj) throws RemoteException;
+    List<Reporter> findAllReporters() throws RemoteException;
 }
