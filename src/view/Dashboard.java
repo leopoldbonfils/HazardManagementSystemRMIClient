@@ -3395,38 +3395,126 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void DeleteHazard2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DeleteHazard2ActionPerformed
         // TODO add your handling code here:
-        
-        int response=JOptionPane.showConfirmDialog(null, "Do you want to delete ","Delete Hazard", JOptionPane.YES_NO_OPTION);
-        if(response==JOptionPane.YES_OPTION){
-           
-              
+        try{
+            int response=JOptionPane.showConfirmDialog(null, "Do you want to delete ","Delete Hazard", JOptionPane.YES_NO_OPTION);
+            if(response==JOptionPane.YES_OPTION){
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            HazardService service = (HazardService) registry.lookup("hazard");
+            Hazard hazardMod = new Hazard();
+            hazardMod.setHazardId(Integer.parseInt(hazardIdDel.getText()));
+            int rowAffected = service.deleteHazard(hazardMod);
+            if (rowAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Deleted successfully");
+                
+                    hazardIdDel.setText("");
+                    hazardTxt1.setText("");
+                    description123Txt.setText("");
+                    severityTxt1.setText("");
+                    date12Txt.setText("");
+                    location11Txt.setText("");
+                    reporter123Txt.setText("");
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Deletion failed");
+
+            }            
+        }
+        }catch(Exception ex){
+          ex.printStackTrace();
         }
 
     }//GEN-LAST:event_DeleteHazard2ActionPerformed
 
     private void AddHazardBtn11ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_AddHazardBtn11ActionPerformed
         // TODO add your handling code here:
-        int response=JOptionPane.showConfirmDialog(null, "Do you want to delete ","Delete Location", JOptionPane.YES_NO_OPTION);
-        if(response==JOptionPane.YES_OPTION){
+        try{
+            int response=JOptionPane.showConfirmDialog(null, "Do you want to delete ","Delete Location", JOptionPane.YES_NO_OPTION);
+            if(response==JOptionPane.YES_OPTION){
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            LocationService service = (LocationService) reg.lookup("location");
 
-           
+            Location locationMod = new Location();
+            
+            locationMod.setLocationId(Integer.parseInt(locationIdTxt1.getText()));
+            int rowAffected = service.deleteLocation(locationMod);
+            if (rowAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Deleted successfully");
+                    hazardIdDel.setText("");
+                    hazardTxt1.setText("");
+                    description123Txt.setText("");
+                    severityTxt1.setText("");
+                    date12Txt.setText("");
+                    location11Txt.setText("");
+                    reporter123Txt.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Deletion failed");
+
+            }
+        }   
+        }catch(Exception ex){
+            ex.printStackTrace();
+        
         }
-
     }//GEN-LAST:event_AddHazardBtn11ActionPerformed
 
     private void DeletebtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DeletebtnActionPerformed
         // TODO add your handling code here:
-        int response=JOptionPane.showConfirmDialog(null, "Do you want to Delete ","Delete Reporter ", JOptionPane.YES_NO_OPTION);
-        if(response==JOptionPane.YES_OPTION){
-           
+       try{
+            int response=JOptionPane.showConfirmDialog(null, "Do you want to Delete ","Delete Reporter ", JOptionPane.YES_NO_OPTION);
+            if(response==JOptionPane.YES_OPTION){
+            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            ReporterService service = (ReporterService) reg.lookup("reporter");
+            Reporter reporterMod = new Reporter();
+            
+            reporterMod.setReporterId(Integer.parseInt(reporterIdTxt1.getText()));
+            int rowAffected = service.deleteReporter(reporterMod);
+            if (rowAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Deleted successfully");
+                    reporterIdTxt1.setText("");
+                    reporterId1.setText("");
+                    reporterId2.setText("");
+                    reporterId4.setText("");
+                    reporterId3.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Deletion failed");
+
+            }
         }
+        
+       }catch(Exception ex){
+         ex.printStackTrace();
+       }
     }//GEN-LAST:event_DeletebtnActionPerformed
 
     private void DeleteMeasureBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DeleteMeasureBtnActionPerformed
         // TODO add your handling code here:
-        int response=JOptionPane.showConfirmDialog(null, "Do you want to delete ","Delete Measure", JOptionPane.YES_NO_OPTION);
-        if(response==JOptionPane.YES_OPTION){
-            
+        try{
+            int response=JOptionPane.showConfirmDialog(null, "Do you want to delete ","Delete Measure", JOptionPane.YES_NO_OPTION);
+            if(response==JOptionPane.YES_OPTION){
+                Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+                MeasureService service = (MeasureService) registry.lookup("measure");
+                Measure measureMod = new Measure();
+
+                measureMod.setMeasureId(Integer.parseInt(measureIdTxt.getText()));
+                int rowAffected = service.deleteMeasure(measureMod);
+                if (rowAffected > 0) {
+                    JOptionPane.showMessageDialog(null, "Deleted successfully");
+
+                        measureIdTxt.setText("");
+                        hazard2Txt.setText("");
+                        measure11Txt.setText("");
+                        authorityTxt.setText("");
+                        date111Txt.setText("");
+                        status111Txt.setText("");
+                        rating111Txt.setText("");
+                        descrption111Txt.setText("");    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Deletion failed");
+
+                }            
+            }
+        }catch(Exception ex){
+          ex.printStackTrace();
         }
     }//GEN-LAST:event_DeleteMeasureBtnActionPerformed
 
@@ -3603,49 +3691,49 @@ public class Dashboard extends javax.swing.JFrame {
     private void jButton8ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
        try {
-    String measureIdText = MeasureIdTxt.getText().trim();
-    if (measureIdText.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Measure ID field is empty. Please enter a number.");
-        return;
-    }
-    if (!measureIdText.matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Please enter a valid numeric measure ID.");
-        return;
-    }
-    int measureId = Integer.parseInt(measureIdText);
-    Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
-    MeasureService service = (MeasureService) registry.lookup("measure");
-    Measure measureObj = service.search(measureId);
-    if (measureObj == null) {
-        JOptionPane.showMessageDialog(this, "Measure with ID " + measureId + " does not exist.");
-        return;
-    }
-    Hazard hazard = measureObj.getHazard();
-    HazardId.setText(hazard != null ? String.valueOf(hazard.getHazardId()) : "");
-    measureTypeTxt.setText(measureObj.getMeasureType());
-    DescriptionTxt2.setText(measureObj.getDescription());
-    
-    // Fixed: Remove unnecessary cast
-           java.util.Date date = measureObj.getImplementationDate();
-    if (date != null) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        DateTxt2.setText(sdf.format(date));
-    } else {
-        DateTxt2.setText("");
-    }
-    ResponsibleTxt.setText(measureObj.getResponsibleAuthority());
-    StatusTxt.setText(measureObj.getStatus());
-    RatingTxt.setText(measureObj.getEffectivenessRating());
-} catch (NumberFormatException e) {
-    JOptionPane.showMessageDialog(this, "Invalid number format: " + e.getMessage());
-} catch (RemoteException e) {
-    JOptionPane.showMessageDialog(this, "Could not connect to the server: " + e.getMessage());
-} catch (NotBoundException e) {
-    JOptionPane.showMessageDialog(this, "Service not found on server: " + e.getMessage());
-} catch (Exception e) {
-    e.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Unexpected error: " + e.getMessage());
-}
+            String measureIdText = MeasureIdTxt.getText().trim();
+            if (measureIdText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Measure ID field is empty. Please enter a number.");
+                return;
+            }
+            if (!measureIdText.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric measure ID.");
+                return;
+            }
+            int measureId = Integer.parseInt(measureIdText);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            MeasureService service = (MeasureService) registry.lookup("measure");
+            Measure measureObj = service.search(measureId);
+            if (measureObj == null) {
+                JOptionPane.showMessageDialog(this, "Measure with ID " + measureId + " does not exist.");
+                return;
+            }
+            Hazard hazard = measureObj.getHazard();
+            HazardId.setText(hazard != null ? String.valueOf(hazard.getHazardId()) : "");
+            measureTypeTxt.setText(measureObj.getMeasureType());
+            DescriptionTxt2.setText(measureObj.getDescription());
+
+            // Fixed: Remove unnecessary cast
+                   java.util.Date date = measureObj.getImplementationDate();
+            if (date != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                DateTxt2.setText(sdf.format(date));
+            } else {
+                DateTxt2.setText("");
+            }
+            ResponsibleTxt.setText(measureObj.getResponsibleAuthority());
+            StatusTxt.setText(measureObj.getStatus());
+            RatingTxt.setText(measureObj.getEffectivenessRating());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid number format: " + e.getMessage());
+        } catch (RemoteException e) {
+            JOptionPane.showMessageDialog(this, "Could not connect to the server: " + e.getMessage());
+        } catch (NotBoundException e) {
+            JOptionPane.showMessageDialog(this, "Service not found on server: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unexpected error: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void HazardIdActionPerformed(ActionEvent evt) {//GEN-FIRST:event_HazardIdActionPerformed
@@ -3667,36 +3755,174 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void DeleteReporterCheckActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DeleteReporterCheckActionPerformed
         // TODO add your handling code here:
-        String reporterIdText = reporterIdTxt1.getText().trim();
-        if (!reporterIdText.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Please enter number.");
-            return;
+       try {
+            String reporterText = reporterIdTxt1.getText().trim();
+
+            if (reporterText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Reporter ID field is empty. Please enter a number.");
+                return;
+            }
+
+            if (!reporterText.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric Reporter ID.");
+                return;
+            }
+
+            int reporterId = Integer.parseInt(reporterText);
+
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            ReporterService service = (ReporterService) registry.lookup("reporter");
+
+            Reporter reporterObj = service.search(reporterId);
+
+            if (reporterObj == null) {
+                JOptionPane.showMessageDialog(this, "Reporter with ID " + reporterId + " does not exist.");
+                return;
+            } 
+            reporterId1.setText(reporterObj.getFullName());
+            reporterId2.setText(reporterObj.getEmail());
+            reporterId4.setText(reporterObj.getPhoneNumber());
+            reporterId3.setText(reporterObj.getGender());
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid number format: " + ex.getMessage());
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(this, "Could not connect to the server: " + ex.getMessage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unexpected error: " + ex.getMessage());
         }
+       
         
        
     }//GEN-LAST:event_DeleteReporterCheckActionPerformed
 
     private void DeleteLocationCheckActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DeleteLocationCheckActionPerformed
         // TODO add your handling code here:
+        try {
+        
+            String locationIdText = locationIdTxt1.getText().trim();
+            if (!locationIdText.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric Location ID.");
+                return;
+            }
+
+            int locationId = Integer.parseInt(locationIdText);
+
+
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            LocationService locationService = (LocationService) registry.lookup("location");
+
+
+            Location locationObj = locationService.search(locationId);
+
+
+            if (locationObj == null) {
+                JOptionPane.showMessageDialog(this, "Location ID " + locationId + " does not exist in the database.");
+                return;
+            }
+
+
+            locationId5.setText(locationObj.getProvince());
+            locationId4.setText(locationObj.getDistrict());
+            locationId2.setText(locationObj.getSector());
+            locationId3.setText(locationObj.getCell());
+            locationId1.setText(locationObj.getVillage());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
        
     }//GEN-LAST:event_DeleteLocationCheckActionPerformed
 
     private void jButton7ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-       
+         try {
+            String hazardIdText = hazardIdDel.getText().trim();
+            if (hazardIdText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Hazard ID field is empty. Please enter a number.");
+                return;
+            }
 
-        
+            if (!hazardIdText.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric Hazard ID.");
+                return;
+            }
+
+            int hazardId = Integer.parseInt(hazardIdText);
+
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            HazardService service = (HazardService) registry.lookup("hazard");
+
+            Hazard hazardObj = service.search(hazardId);
+
+            if (hazardObj == null) {
+                JOptionPane.showMessageDialog(this, "Hazard with ID " + hazardId + " does not exist.");
+                return;
+            }
+            hazardTxt1.setText(hazardObj.getHazardType());
+            severityTxt1.setText(hazardObj.getSeverity());
+            date12Txt.setText(hazardObj.getDate()); 
+            location11Txt.setText(String.valueOf(hazardObj.getLocation().getLocationId()));
+            reporter123Txt.setText(String.valueOf(hazardObj.getReporter().getReporterId()));
+            description123Txt.setText(hazardObj.getDescription());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid number format: " + e.getMessage());
+        } catch (RemoteException e) {
+            JOptionPane.showMessageDialog(this, "Could not connect to the server: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unexpected error: " + e.getMessage());
+        }    
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton10ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        String measureIdText = measureIdTxt.getText().trim();
-        if (!measureIdText.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Please enter number.");
-            return;
-        }
-        
-       
+        try {
+            String measureIdText = measureIdTxt.getText().trim();
+            if (measureIdText.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Measure ID field is empty. Please enter a number.");
+                return;
+            }
+            if (!measureIdText.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric measure ID.");
+                return;
+            }
+            int measureId = Integer.parseInt(measureIdText);
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            MeasureService service = (MeasureService) registry.lookup("measure");
+            Measure measureObj = service.search(measureId);
+            if (measureObj == null) {
+                JOptionPane.showMessageDialog(this, "Measure with ID " + measureId + " does not exist.");
+                return;
+            }
+            Hazard hazard = measureObj.getHazard();
+            hazard2Txt.setText(hazard != null ? String.valueOf(hazard.getHazardId()) : "");
+            measure11Txt.setText(measureObj.getMeasureType());
+            descrption111Txt.setText(measureObj.getDescription());
+
+                   java.util.Date date = measureObj.getImplementationDate();
+            if (date != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                date111Txt.setText(sdf.format(date));
+            } else {
+                date111Txt.setText("");
+            }
+            authorityTxt.setText(measureObj.getResponsibleAuthority());
+            status111Txt.setText(measureObj.getStatus());
+            rating111Txt.setText(measureObj.getEffectivenessRating());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid number format: " + e.getMessage());
+        } catch (RemoteException e) {
+            JOptionPane.showMessageDialog(this, "Could not connect to the server: " + e.getMessage());
+        } catch (NotBoundException e) {
+            JOptionPane.showMessageDialog(this, "Service not found on server: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Unexpected error: " + e.getMessage());
+        } 
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void DateTxt1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DateTxt1ActionPerformed

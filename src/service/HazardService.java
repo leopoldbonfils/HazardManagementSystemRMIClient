@@ -18,6 +18,6 @@ public interface HazardService extends Remote{
     int registerHazard(Hazard hazardObj)throws RemoteException;
     int updateHazard(Hazard hazardObj)throws RemoteException;
     Hazard search(int hazardId)throws RemoteException;
-    
+    int deleteHazard(Hazard hazardObj) throws RemoteException;
     
 }
