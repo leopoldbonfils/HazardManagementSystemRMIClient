@@ -27,6 +27,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 import modal.Hazard;
+import modal.HazardReporterDTO;
 import modal.Location;
 import modal.Measure;
 import modal.Reporter;
@@ -99,22 +101,8 @@ public class Dashboard extends javax.swing.JFrame {
         comboBoxTxt.addItem("Medium");
         comboBoxTxt.addItem("High");
         
-        
-        HazardTable = new JTable();
-        HazardTable.setModel(new DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "ID", "Type", "Description", "Severity", "Date", "Location", "Reporter"
-            }
-        ));
-
-       
-      
  }
-     
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -128,7 +116,6 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel2 = new JPanel();
         jLabel15 = new JLabel();
         jLabel16 = new JLabel();
-        jLabel11 = new JLabel();
         jPanel3 = new JPanel();
         jButton1 = new JButton();
         jButton2 = new JButton();
@@ -397,33 +384,23 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel16.setFont(new Font("Tahoma", 1, 26)); // NOI18N
         jLabel16.setText("Hazard Management System");
 
-        jLabel11.setIcon(new ImageIcon(getClass().getResource("/Icon/Image Hazard (2).jpg"))); // NOI18N
-
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel15)
-                .addGap(78, 78, 78)
+                .addGap(113, 113, 113)
                 .addComponent(jLabel16, GroupLayout.PREFERRED_SIZE, 409, GroupLayout.PREFERRED_SIZE)
-                .addGap(120, 120, 120)
-                .addComponent(jLabel11)
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel15))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel16))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel11)))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel15, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel16, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new Color(122, 121, 126));
@@ -633,7 +610,7 @@ public class Dashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Hazard ID", "Hazard Type", "Severity Level", "Date", "Measure", "Location", "Reporter"
+                "Hazard ID", "Hazard Type", "Severity Level", "Date", "Measure", "Location", "Reporter", "Status"
             }
         ));
         jScrollPane2.setViewportView(dashTable);
@@ -651,12 +628,12 @@ public class Dashboard extends javax.swing.JFrame {
         searchTxt.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Tahoma", 0, 18))); // NOI18N
 
         jLabel7.setFont(new Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setText("Hazard Table");
+        jLabel7.setText("Hazard Management Table");
 
         jButton18.setBackground(new Color(153, 153, 153));
         jButton18.setFont(new Font("Tahoma", 1, 18)); // NOI18N
         jButton18.setForeground(new Color(51, 51, 51));
-        jButton18.setText("Display");
+        jButton18.setText("Advanced Display");
         jButton18.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jButton18ActionPerformed(evt);
@@ -682,10 +659,10 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 938, GroupLayout.PREFERRED_SIZE))
                     .addGroup(DashboardLayout.createSequentialGroup()
-                        .addGap(403, 403, 403)
-                        .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-                        .addGap(276, 276, 276)
-                        .addComponent(jButton18, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)))
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+                        .addGap(432, 432, 432)
+                        .addComponent(jButton18)))
                 .addContainerGap(1132, Short.MAX_VALUE))
         );
         DashboardLayout.setVerticalGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -742,7 +719,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        HazardTable.setFont(new Font("Tahoma", 0, 17)); // NOI18N
         HazardTable.setModel(new DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -799,7 +775,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(HazardLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jScrollPane5, GroupLayout.PREFERRED_SIZE, 950, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(1120, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         HazardLayout.setVerticalGroup(HazardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(HazardLayout.createSequentialGroup()
@@ -813,7 +789,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(DisplayHazardTable, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE))
                 .addGap(107, 107, 107)
                 .addComponent(jScrollPane5, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         Panel.add(Hazard, "Hazard");
@@ -2600,7 +2576,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Panel, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(Panel, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
             .addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -3704,6 +3680,35 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         // TODO add your handling code here:
+          try {
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            HazardService service = (HazardService) registry.lookup("hazard");
+            List<HazardReporterDTO> reporters = service.getAllHazardReports();
+
+            System.out.println("Hazard size: " + reporters.size());
+
+            DefaultTableModel tbModel = (DefaultTableModel) dashTable.getModel();
+            tbModel.setRowCount(0);
+
+            for (HazardReporterDTO dto : reporters) {
+                Object[] rowData = {
+                    dto.getHazardId(),
+                    dto.getHazardType(),
+                    dto.getSeverityLevel(),
+                    dto.getDateReported(),
+                    dto.getMeasureDescription(),
+                    dto.getLocation(),
+                    dto.getReporterName(),
+                    dto.getMeasureStatus()
+                    };
+
+                tbModel.addRow(rowData);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error displaying hazards: " + ex.getMessage());
+        }
        
     }//GEN-LAST:event_jButton18ActionPerformed
 
@@ -3771,30 +3776,30 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void DisplayHazardTableActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DisplayHazardTableActionPerformed
         // TODO add your handling code here:
-       try {
+      try {
     Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
     HazardService service = (HazardService) registry.lookup("hazard");
     List<Hazard> hazards = service.findAllHazards();
 
+    System.out.println("Hazard size: " + hazards.size());
+
     DefaultTableModel tbModel = (DefaultTableModel) HazardTable.getModel();
-    tbModel.setRowCount(0); // Clear table
+    tbModel.setRowCount(0);
 
     for (Hazard haz : hazards) {
-        // Defensive checks for null location/reporter
-        Integer locationId = (haz.getLocation() != null) ? haz.getLocation().getLocationId() : null;
-        Integer reporterId = (haz.getReporter() != null) ? haz.getReporter().getReporterId() : null;
-
         Object[] rowData = {
             haz.getHazardId(),
             haz.getHazardType(),
             haz.getDescription(),
             haz.getSeverity(),
             haz.getDate(),
-            locationId != null ? locationId : "null",
-            reporterId != null ? reporterId : "null"
+            haz.getLocation().getLocationId(),
+            haz.getReporter().getReporterId()
         };
+        
         tbModel.addRow(rowData);
     }
+
 } catch (Exception ex) {
     ex.printStackTrace();
     JOptionPane.showMessageDialog(null, "Error displaying hazards: " + ex.getMessage());
@@ -3826,7 +3831,7 @@ public class Dashboard extends javax.swing.JFrame {
             measureTypeTxt.setText(measureObj.getMeasureType());
             DescriptionTxt2.setText(measureObj.getDescription());
 
-            // Fixed: Remove unnecessary cast
+           
                    java.util.Date date = measureObj.getImplementationDate();
             if (date != null) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -3859,7 +3864,41 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void searchBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
         // TODO add your handling code here:
-       
+         String keyword = searchTxt.getText().trim(); 
+
+        try {
+            if (keyword.isEmpty()) {
+                keyword = ""; 
+            }
+
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            HazardService service = (HazardService) registry.lookup("hazard");
+
+            List<HazardReporterDTO> lists = service.searchHazardReportsByType(keyword);
+            System.out.println("Hazard size: " + lists.size());
+
+            DefaultTableModel tbModel = (DefaultTableModel) dashTable.getModel();
+            tbModel.setRowCount(0);
+
+            for (HazardReporterDTO dto : lists) {
+                Object[] rowData = {
+                    dto.getHazardId(),
+                    dto.getHazardType(),
+                    dto.getSeverityLevel(),
+                    dto.getDateReported(),
+                    dto.getMeasureDescription(),
+                    dto.getLocation(),
+                    dto.getReporterName(),
+                    dto.getMeasureStatus()
+                };
+                tbModel.addRow(rowData);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error displaying hazards: " + ex.getMessage());
+        }
+
     }//GEN-LAST:event_searchBtnActionPerformed
 
     private void reporterId4ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_reporterId4ActionPerformed
@@ -4188,7 +4227,6 @@ public class Dashboard extends javax.swing.JFrame {
     private JLabel jLabel107;
     private JLabel jLabel108;
     private JLabel jLabel109;
-    private JLabel jLabel11;
     private JLabel jLabel110;
     private JLabel jLabel111;
     private JLabel jLabel112;
