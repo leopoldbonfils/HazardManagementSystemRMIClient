@@ -17,5 +17,6 @@ import modal.User;
 public interface UserService extends Remote{
     int registerUser(User userObj) throws RemoteException;
     boolean loginUser(String username, String password) throws RemoteException;
+    boolean confirmUser(String token) throws RemoteException;
     
 }

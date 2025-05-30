@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -24,6 +25,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -177,6 +179,7 @@ public class Dashboard extends javax.swing.JFrame {
         searchTxt = new JTextField();
         jLabel7 = new JLabel();
         jButton18 = new JButton();
+        printBtn = new JButton();
         Hazard = new JPanel();
         jLabel1 = new JLabel();
         AddBtn = new JButton();
@@ -627,13 +630,16 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel18, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(CountMeasures, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20))
+                .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel18, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(CountMeasures, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel20)))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -684,16 +690,25 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        printBtn.setBackground(new Color(43, 131, 218));
+        printBtn.setFont(new Font("Tahoma", 1, 18)); // NOI18N
+        printBtn.setText("Print Report");
+        printBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                printBtnActionPerformed(evt);
+            }
+        });
+
         GroupLayout DashboardLayout = new GroupLayout(Dashboard);
         Dashboard.setLayout(DashboardLayout);
         DashboardLayout.setHorizontalGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(DashboardLayout.createSequentialGroup()
                 .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(DashboardLayout.createSequentialGroup()
-                        .addGap(321, 321, 321)
+                        .addGap(268, 268, 268)
                         .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(95, 95, 95)
+                        .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
                     .addGroup(DashboardLayout.createSequentialGroup()
                         .addGap(170, 170, 170)
                         .addComponent(searchTxt, GroupLayout.PREFERRED_SIZE, 457, GroupLayout.PREFERRED_SIZE)
@@ -705,8 +720,10 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(DashboardLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-                        .addGap(432, 432, 432)
-                        .addComponent(jButton18)))
+                        .addGap(288, 288, 288)
+                        .addComponent(jButton18)
+                        .addGap(18, 18, 18)
+                        .addComponent(printBtn, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(1132, Short.MAX_VALUE))
         );
         DashboardLayout.setVerticalGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -719,11 +736,16 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton18, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addGroup(DashboardLayout.createSequentialGroup()
+                        .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(printBtn, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19))
+                    .addGroup(GroupLayout.Alignment.LEADING, DashboardLayout.createSequentialGroup()
+                        .addComponent(jButton18, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -4152,6 +4174,28 @@ public class Dashboard extends javax.swing.JFrame {
        
     }//GEN-LAST:event_CountMeasuresMouseClicked
 
+    private void printBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_printBtnActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+       
+        boolean complete = dashTable.print(
+            JTable.PrintMode.FIT_WIDTH, 
+            new MessageFormat("Hazard Report"), 
+            new MessageFormat("Page {0}")
+        );
+
+        if (complete) {
+            JOptionPane.showMessageDialog(null, "Report printed successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Printing canceled.");
+        }
+
+    } catch (PrinterException pe) {
+        JOptionPane.showMessageDialog(null, "Printing failed: " + pe.getMessage());
+    }
+    }//GEN-LAST:event_printBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -4427,6 +4471,7 @@ public class Dashboard extends javax.swing.JFrame {
     private JTextField measureTxt;
     private JTextField measureTypeTxt;
     private JTextField phoneNumberTxt;
+    private JButton printBtn;
     private JTextField provinceTxt;
     private JTextField rating111Txt;
     private JTextField ratingTxt;

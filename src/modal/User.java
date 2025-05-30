@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 public class User implements Serializable {
     
+    
     private int userId;
 
    
@@ -14,8 +15,15 @@ public class User implements Serializable {
     
     private String password;
 
-   
+    
     private String email;
+
+   
+    private String confirmationToken;
+
+   
+    private boolean confirmed;
+
 
     public User() {
     }
@@ -24,12 +32,16 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public User(int userId, String userName, String password, String email) {
+    public User(int userId, String userName, String password, String email, String confirmationToken, boolean confirmed) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
-        this.email = email;
+        setEmail(email); 
+        this.confirmationToken = confirmationToken;
+        this.confirmed = confirmed;
     }
+
+    
 
     public int getUserId() {
         return userId;
@@ -60,9 +72,25 @@ public class User implements Serializable {
     }
 
     public void setEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Email cannot be null or empty");
+        }
         this.email = email;
     }
 
-   
-   
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
 }
