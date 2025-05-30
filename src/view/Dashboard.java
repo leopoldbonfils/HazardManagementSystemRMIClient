@@ -101,7 +101,39 @@ public class Dashboard extends javax.swing.JFrame {
         comboBoxTxt.addItem("Medium");
         comboBoxTxt.addItem("High");
         
- }
+        javax.swing.Timer timerHazard = new javax.swing.Timer(5000, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+                    HazardService hazardService = (HazardService) registry.lookup("hazard");
+                    long hazardCount = hazardService.getHazardCount();
+                    countHazard.setText(String.valueOf(hazardCount));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        timerHazard.start();
+
+
+        
+        javax.swing.Timer timerMeasure = new javax.swing.Timer(5000, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+                    MeasureService measureService = (MeasureService) registry.lookup("measure");
+                    long measureCount = measureService.countMeasures();
+                    CountMeasures.setText(String.valueOf(measureCount));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        timerMeasure.start();
+
+         }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,11 +165,11 @@ public class Dashboard extends javax.swing.JFrame {
         Dashboard = new JPanel();
         jPanel4 = new JPanel();
         jLabel8 = new JLabel();
-        jLabel9 = new JLabel();
+        countHazard = new JLabel();
         jLabel17 = new JLabel();
         jPanel5 = new JPanel();
         jLabel18 = new JLabel();
-        jLabel19 = new JLabel();
+        CountMeasures = new JLabel();
         jLabel20 = new JLabel();
         jScrollPane2 = new JScrollPane();
         dashTable = new JTable();
@@ -529,10 +561,15 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel4.setBorder(new LineBorder(new Color(0, 51, 51), 2, true));
 
         jLabel8.setFont(new Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Hazard");
+        jLabel8.setText("Hazards");
 
-        jLabel9.setFont(new Font("Tahoma", 1, 36)); // NOI18N
-        jLabel9.setText("18");
+        countHazard.setFont(new Font("Tahoma", 1, 36)); // NOI18N
+        countHazard.setText("0");
+        countHazard.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                countHazardMouseClicked(evt);
+            }
+        });
 
         jLabel17.setBackground(new Color(255, 255, 255));
         jLabel17.setFont(new Font("Tahoma", 0, 18)); // NOI18N
@@ -543,14 +580,15 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel9, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(countHazard, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)))
-                .addGap(48, 48, 48))
+                        .addComponent(jLabel17)
+                        .addGap(6, 6, 6))
+                    .addComponent(jLabel8, GroupLayout.PREFERRED_SIZE, 76, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -558,12 +596,12 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGroup(jPanel4Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9))
+                        .addGap(10, 10, 10)
+                        .addComponent(countHazard))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel17)))
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new Color(255, 255, 255));
@@ -572,8 +610,13 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel18.setFont(new Font("Tahoma", 1, 18)); // NOI18N
         jLabel18.setText("Measure");
 
-        jLabel19.setFont(new Font("Tahoma", 1, 36)); // NOI18N
-        jLabel19.setText("11");
+        CountMeasures.setFont(new Font("Tahoma", 1, 36)); // NOI18N
+        CountMeasures.setText("0");
+        CountMeasures.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                CountMeasuresMouseClicked(evt);
+            }
+        });
 
         jLabel20.setBackground(new Color(255, 255, 255));
         jLabel20.setFont(new Font("Tahoma", 0, 18)); // NOI18N
@@ -587,8 +630,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel18, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel19)
+                .addGap(18, 18, 18)
+                .addComponent(CountMeasures, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel20))
         );
@@ -596,13 +639,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel18)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(10, 10, 10)
+                        .addComponent(CountMeasures, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel20)))
-                .addGap(32, 32, 32))
+                .addGap(40, 40, 40))
         );
 
         dashTable.setModel(new DefaultTableModel(
@@ -646,9 +690,9 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(DashboardLayout.createSequentialGroup()
                 .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(DashboardLayout.createSequentialGroup()
-                        .addGap(283, 283, 283)
-                        .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93)
+                        .addGap(321, 321, 321)
+                        .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
                         .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(DashboardLayout.createSequentialGroup()
                         .addGap(170, 170, 170)
@@ -674,7 +718,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(DashboardLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton18, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
@@ -4081,6 +4125,33 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_DateTxt1ActionPerformed
 
+    private void countHazardMouseClicked(MouseEvent evt) {//GEN-FIRST:event_countHazardMouseClicked
+        // TODO add your handling code here:
+        
+        try{
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            HazardService service = (HazardService) registry.lookup("hazard");
+            long count = service.getHazardCount();
+            countHazard.setText(String.valueOf(count));
+        }catch(Exception ex){
+          ex.printStackTrace();
+        }
+    }//GEN-LAST:event_countHazardMouseClicked
+
+    private void CountMeasuresMouseClicked(MouseEvent evt) {//GEN-FIRST:event_CountMeasuresMouseClicked
+        // TODO add your handling code here:
+        try{
+            Registry registry = LocateRegistry.getRegistry("127.0.0.1", 5050);
+            MeasureService service = (MeasureService) registry.lookup("measure");
+            long count = service.countMeasures();
+            CountMeasures.setText(String.valueOf(count));
+        }catch(Exception ex){
+          ex.printStackTrace();
+        }
+        
+       
+    }//GEN-LAST:event_CountMeasuresMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -4132,6 +4203,7 @@ public class Dashboard extends javax.swing.JFrame {
     private JTextField CellTxt;
     private JButton CheckLocation;
     private JButton CheckReporter;
+    private JLabel CountMeasures;
     private JPanel Dashboard;
     private JTextField DateTxt;
     private JTextField DateTxt1;
@@ -4187,6 +4259,7 @@ public class Dashboard extends javax.swing.JFrame {
     private JComboBox<String> comboBox;
     private JComboBox<String> comboBoxGenderTxt;
     private JComboBox<String> comboBoxTxt;
+    private JLabel countHazard;
     private JTable dashTable;
     private JTextField date111Txt;
     private JTextField date12Txt;
@@ -4260,7 +4333,6 @@ public class Dashboard extends javax.swing.JFrame {
     private JLabel jLabel16;
     private JLabel jLabel17;
     private JLabel jLabel18;
-    private JLabel jLabel19;
     private JLabel jLabel2;
     private JLabel jLabel20;
     private JLabel jLabel21;
@@ -4314,7 +4386,6 @@ public class Dashboard extends javax.swing.JFrame {
     private JLabel jLabel87;
     private JLabel jLabel88;
     private JLabel jLabel89;
-    private JLabel jLabel9;
     private JLabel jLabel90;
     private JLabel jLabel91;
     private JLabel jLabel92;

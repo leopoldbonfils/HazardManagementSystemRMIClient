@@ -98,7 +98,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 108, Short.MAX_VALUE)
+                .addGap(0, 142, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,10 +163,9 @@ public class Login extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +177,7 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,9 +188,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,39 +211,35 @@ public class Login extends javax.swing.JFrame {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-         if(userTxt.getText().trim().isEmpty()){
+        if (userTxt.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "User name is required");
-        }else if(passwordTxt.getText().trim().isEmpty()){
+        } else if (passwordTxt.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Password must be required");
-        }else{
-            try{
-                 Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
-                 UserService service = (UserService) reg.lookup("user");
-                 User user=new User();
-                user.setUserName(userTxt.getText());
-                user.setPassword(passwordTxt.getText());
-                int rowAffected = service.registerUser(user);
-                
-                if(rowAffected > 0){
-                JOptionPane.showMessageDialog(this, "LOGIN SUCCESSFULLY");
+        } else {
+            try {
+                String username = userTxt.getText().trim();
+                String password = passwordTxt.getText().trim();
 
-                Dashboard dashboard = new Dashboard();
-                dashboard.setVisible(true);
-                dashboard.pack();
-                dashboard.setLocationRelativeTo(null);
-                dispose();
-        }else{
-            JOptionPane.showMessageDialog(this, "Login failed");
-        }
-            }catch(Exception ex){
+                Registry reg = LocateRegistry.getRegistry("127.0.0.1", 5050);
+                UserService service = (UserService) reg.lookup("user");
+
+                boolean isLoggedIn = service.loginUser(username, password);
+
+                if (isLoggedIn) {
+                    JOptionPane.showMessageDialog(this, "LOGIN SUCCESSFULLY");
+
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.setVisible(true);
+                    dashboard.pack();
+                    dashboard.setLocationRelativeTo(null);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Login failed");
+                }
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
-       
-        
-        
-        
-        
-        }    
+        }  
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
