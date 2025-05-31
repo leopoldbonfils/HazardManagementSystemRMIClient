@@ -134,8 +134,15 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
         timerMeasure.start();
+        
+          JDateChooser DateTxt = new JDateChooser();
+           DateTxt.setDateFormatString("yyyy-MM-dd");
+        
+        
 
-         }
+   }
+    
+            
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -215,7 +222,6 @@ public class Dashboard extends javax.swing.JFrame {
         AddHazard = new JPanel();
         jLabel51 = new JLabel();
         hazardTxt = new JTextField();
-        DateTxt = new JTextField();
         AddHazardBtn = new JButton();
         jScrollPane11 = new JScrollPane();
         descriptionTxt = new JTextArea();
@@ -228,6 +234,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel55 = new JLabel();
         locationIdAdd = new JTextField();
         reporterIdAdd = new JTextField();
+        DateTxt = new JDateChooser();
         AddLocation = new JPanel();
         jLabel58 = new JLabel();
         provinceTxt = new JTextField();
@@ -510,9 +517,11 @@ public class Dashboard extends javax.swing.JFrame {
                         .addComponent(jButton3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel27, GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel28, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel28, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel14))
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -526,34 +535,33 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(174, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10, GroupLayout.Alignment.TRAILING))
+                .addGap(55, 55, 55)
+                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4)
+                    .addComponent(jLabel13))
+                .addGap(50, 50, 50)
+                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(196, 196, 196)
-                        .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel10)
-                            .addComponent(jButton1))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13, GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton4, GroupLayout.Alignment.TRAILING))
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, GroupLayout.Alignment.TRAILING))
-                        .addGap(57, 57, 57)
-                        .addComponent(jButton2))
+                        .addComponent(jLabel12, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel27))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(445, Short.MAX_VALUE)
-                        .addComponent(jLabel27)))
-                .addGap(66, 66, 66)
-                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton3)
+                        .addGap(54, 54, 54)
+                        .addComponent(jButton2)))
+                .addGap(53, 53, 53)
+                .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton16)
                     .addComponent(jLabel28))
-                .addGap(68, 68, 68)
+                .addGap(122, 122, 122)
                 .addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel14)
                     .addComponent(LogoutBtn))
-                .addGap(114, 114, 114))
+                .addGap(94, 94, 94))
         );
 
         Panel.setLayout(new CardLayout());
@@ -1196,12 +1204,6 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        DateTxt.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                DateTxtActionPerformed(evt);
-            }
-        });
-
         AddHazardBtn.setText("Add");
         AddHazardBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -1262,11 +1264,11 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(AddHazardLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel51)
                             .addComponent(comboBoxTxt, 0, 260, Short.MAX_VALUE)
-                            .addComponent(DateTxt)
                             .addComponent(jScrollPane11)
                             .addComponent(hazardTxt)
                             .addComponent(locationIdAdd)
-                            .addComponent(reporterIdAdd)))
+                            .addComponent(reporterIdAdd)
+                            .addComponent(DateTxt, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(AddHazardLayout.createSequentialGroup()
                         .addGap(423, 423, 423)
                         .addComponent(AddHazardBtn, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)))
@@ -1276,7 +1278,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(AddHazardLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel51)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(AddHazardLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(hazardTxt, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel52))
@@ -1284,10 +1286,13 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(AddHazardLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addComponent(comboBoxTxt, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel53))
-                .addGap(28, 28, 28)
-                .addGroup(AddHazardLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel54)
-                    .addComponent(DateTxt, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+                .addGroup(AddHazardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(AddHazardLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel54))
+                    .addGroup(GroupLayout.Alignment.TRAILING, AddHazardLayout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DateTxt, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
                 .addGroup(AddHazardLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(AddHazardLayout.createSequentialGroup()
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2885,7 +2890,7 @@ public class Dashboard extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Hazard Type must contain only letters");
         }else if (comboBoxTxt.getSelectedItem().toString().equals("Select Severity")) {
             JOptionPane.showMessageDialog(this, "Select Severity Level is required");
-        } else if (DateTxt.getText().trim().isEmpty()){
+        } else if (DateTxt.getDate() == null){
             JOptionPane.showMessageDialog(this, "Date is required");
         } else if (descriptionTxt.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Description is required");
@@ -2904,7 +2909,12 @@ public class Dashboard extends javax.swing.JFrame {
                 
                 Hazard hazardObj = new Hazard();
                 hazardObj.setHazardType(hazardTxt.getText());
-                hazardObj.setDate(DateTxt.getText());
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String dateReported = sdf.format(DateTxt.getDate());
+                
+                java.util.Date date = DateTxt.getDate();
+                hazardObj.setDate(dateReported);
                 hazardObj.setDescription(descriptionTxt.getText());
                 hazardObj.setSeverity(comboBoxTxt.getSelectedItem().toString());   
                 Location location = new Location();
@@ -2921,9 +2931,9 @@ public class Dashboard extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Hazard saved successfully.");
                     hazardTxt.setText("");
                     descriptionTxt.setText("");
-                    DateTxt.setText("");
+                    DateTxt.setDate(null);
                     comboBoxTxt.setSelectedIndex(0);
-                    DateTxt.setText("");
+                    
 
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to save hazard.");
@@ -2937,10 +2947,6 @@ public class Dashboard extends javax.swing.JFrame {
        
      }
     }//GEN-LAST:event_AddHazardBtnActionPerformed
-
-    private void DateTxtActionPerformed(ActionEvent evt) {//GEN-FIRST:event_DateTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DateTxtActionPerformed
 
     private void hazardTxtActionPerformed(ActionEvent evt) {//GEN-FIRST:event_hazardTxtActionPerformed
         // TODO add your handling code here:
@@ -4249,7 +4255,7 @@ public class Dashboard extends javax.swing.JFrame {
     private JButton CheckReporter;
     private JLabel CountMeasures;
     private JPanel Dashboard;
-    private JTextField DateTxt;
+    private JDateChooser DateTxt;
     private JTextField DateTxt1;
     private JTextField DateTxt2;
     private JButton DeleteBtn;

@@ -7,6 +7,7 @@ package view;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.UUID;
 import modal.User;
 import javax.swing.JOptionPane;
 import service.UserService;
@@ -250,19 +251,19 @@ public class Register extends javax.swing.JFrame {
         User userObj = new User();
         userObj.setUserName(userTxt.getText());   
         userObj.setPassword(passwordTxt.getText());   
-        userObj.setEmail(emailTxt.getText());  
+        userObj.setEmail(emailTxt.getText()); 
+        
+        
+        
         int rowAffected = service.registerUser(userObj);
         if(rowAffected > 0) {
-            JOptionPane.showMessageDialog(this, "Register saving user data");
+            JOptionPane.showMessageDialog(null, "Check your email for OTP!");
+            new OTPConfirmation().setVisible(true);
+            dispose();
             userTxt.setText("");
             emailTxt.setText("");
             passwordTxt.setText("");
             
-            Login login = new Login();
-            login.setVisible(true);
-            login.pack();
-            login.setLocationRelativeTo(null);
-            dispose();
         }
     }catch(Exception ex){
         ex.printStackTrace();
